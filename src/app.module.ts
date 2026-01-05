@@ -23,7 +23,14 @@ import { ProductsModule } from './products/products.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         autoLoadEntities: true,
-        synchronize: true, // Recuerda: Solo en desarrollo
+        synchronize: true,
+        // --- CONFIGURACIÓN SSL PARA NEON/RENDER ---
+        ssl: process.env.STAGE === 'prod',
+        extra: {
+          ssl: process.env.STAGE === 'prod'
+            ? { rejectUnauthorized: false }
+            : null,
+        },
       }),
     }),
 
